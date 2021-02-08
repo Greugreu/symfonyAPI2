@@ -27,6 +27,11 @@ class SchoolClass
      */
     private $classSize;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Schools::class, inversedBy="schoolClasses")
+     */
+    private $schoolHasClasses;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class SchoolClass
     public function setClassSize(int $classSize): self
     {
         $this->classSize = $classSize;
+
+        return $this;
+    }
+
+    public function getSchoolHasClasses(): ?Schools
+    {
+        return $this->schoolHasClasses;
+    }
+
+    public function setSchoolHasClasses(?Schools $schoolHasClasses): self
+    {
+        $this->schoolHasClasses = $schoolHasClasses;
 
         return $this;
     }

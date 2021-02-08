@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SchoolsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Schools
      * @ORM\Column(type="integer")
      */
     private $phone;
+
+    /**
+     * @ORM\OneToMany(targetEntity=SchoolClass::class, mappedBy="schoolHasClasses")
+     */
+    private $schoolClasses;
+
+    public function __construct()
+    {
+        $this->schoolClasses = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,36 @@ class Schools
     public function setPhone(int $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SchoolClass[]
+     */
+    public function getSchoolClasses(): Collection
+    {
+        return $this->schoolClasses;
+    }
+
+    public function addSchoolClass(SchoolClass $schoolClass): self
+    {
+        if (!$this->schoolClasses->contains($schoolClass)) {
+            $this->schoolClasses[] = $schoolClass;
+            $schoolClass->setSchoolHasClasses($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSchoolClass(SchoolClass $schoolClass): self
+    {
+        if ($this->schoolClasses->removeElement($schoolClass)) {
+            // set the owning side to null (unless already changed)
+            if ($schoolClass->getSchoolHasClasses() === $this) {
+                $schoolClass->setSchoolHasClasses(null);
+            }
+        }
 
         return $this;
     }
