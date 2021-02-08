@@ -27,6 +27,11 @@ class Schools
      */
     private $adress;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $phone;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Schools
     public function setAdress(string $adress): self
     {
         $this->adress = $adress;
+
+        return $this;
+    }
+
+    public function getPhone(): ?int
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(int $phone): self
+    {
+        $this->phone = $phone;
 
         return $this;
     }
