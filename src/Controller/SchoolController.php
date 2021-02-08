@@ -54,27 +54,4 @@ class SchoolController extends AbstractController
 
         return $response;
     }
-
-    /**
-     * @Route("/schoolClass", name="schoolClass")
-     */
-    public function classAction(): Response
-    {
-        //Récupération des données en BDD
-        $schoolClasses = $this->getDoctrine()
-            ->getRepository(SchoolClass::class)
-            ->findAll();
-
-        //Sérialization
-        $jsonContent = $this->serializer->serialize($schoolClasses, 'json');
-
-        //Création de la JsonResponse
-        //return JsonResponse::fromJsonString($jsonContent);
-
-        $response = new Response();
-        $response->setContent($jsonContent);
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
-    }
 }

@@ -34,7 +34,7 @@ class ClassStudentController extends AbstractController
     /**
      * @Route("/classStudents", name="classStudents")
      */
-    public function classAction(): Response
+    public function studentAction(): Response
     {
         //Récupération des données en BDD
         $classStudents = $this->getDoctrine()
