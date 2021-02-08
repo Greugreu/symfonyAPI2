@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\SchoolClass;
 use App\Entity\Schools;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -27,6 +28,14 @@ class AppFixtures extends Fixture
         $pigier->setAdress('Saint Marc 3');
         $pigier->setPhone(0123456);
         $manager->persist($pigier);
+
+        for($i=0;$i<5;$i++)
+        {
+            $schoolClass = new SchoolClass();
+            $schoolClass->setClassName('ClassName'.$i);
+            $schoolClass->setClassSize($i);
+            $manager->persist($schoolClass);
+        }
 
         $manager->flush();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\SchoolClass;
 use App\Entity\Schools;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,15 +29,15 @@ class SchoolController extends AbstractController
     /**
      * @Route("/school", name="school")
      */
-    public function ecoleAction(): Response
+    public function schoolAction(): Response
     {
         //Récupération des données en BDD
-        $ecoles = $this->getDoctrine()
+        $schools = $this->getDoctrine()
             ->getRepository(Schools::class)
             ->findAll();
 
         //Sérialization
-        $jsonContent = $this->serializer->serialize($ecoles, 'json');
+        $jsonContent = $this->serializer->serialize($schools, 'json');
 
         //Création de la JsonResponse
         //return JsonResponse::fromJsonString($jsonContent);
@@ -49,12 +50,24 @@ class SchoolController extends AbstractController
     }
 
     /**
-     * @Route("/classe", name="classe")
+     * @Route("/schoolClass", name="schoolClass")
      */
-    public function classeAction(): JsonResponse
+    public function classAction(): Response
     {
-        $response = new JsonResponse();
-        $response->setData("Method API en cours de DEV");
+        //Récupération des données en BDD
+        $schoolClasses = $this->getDoctrine()
+            ->getRepository(SchoolClass::class)
+            ->findAll();
+
+        //Sérialization
+        $jsonContent = $this->serializer->serialize($schoolClasses, 'json');
+
+        //Création de la JsonResponse
+        //return JsonResponse::fromJsonString($jsonContent);
+
+        $response = new Response();
+        $response->setContent($jsonContent);
+        $response->headers->set('Content-Type', 'application/json');
 
         return $response;
     }
