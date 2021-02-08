@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -20,10 +21,15 @@ class SchoolController extends AbstractController
     private $serializer;
 
     /**
-     * EcoleController constructor.
+     * SchoolController constructor.
      */
     public function __construct() {
-        $this->serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
+        $defaultContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
+                return $object->getName();
+            },
+        ];
+        $this->serializer = new Serializer([new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)], [new JsonEncoder()]);
     }
 
     /**

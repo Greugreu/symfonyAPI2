@@ -32,8 +32,27 @@ class AppFixtures extends Fixture
         for($i=0;$i<5;$i++)
         {
             $schoolClass = new SchoolClass();
-            $schoolClass->setClassName('ClassName'.$i);
+            $schoolClass->setClassName('BCI '.$i);
             $schoolClass->setClassSize($i);
+            $schoolClass->setSchoolHasClasses($nfactory);
+            $manager->persist($schoolClass);
+        }
+
+        for($i=0;$i<5;$i++)
+        {
+            $schoolClass = new SchoolClass();
+            $schoolClass->setClassName('COMM '.$i);
+            $schoolClass->setClassSize($i);
+            $schoolClass->setSchoolHasClasses($iscom);
+            $manager->persist($schoolClass);
+        }
+
+        for($i=0;$i<5;$i++)
+        {
+            $schoolClass = new SchoolClass();
+            $schoolClass->setClassName('RH '.$i);
+            $schoolClass->setClassSize($i);
+            $schoolClass->setSchoolHasClasses($pigier);
             $manager->persist($schoolClass);
         }
 
